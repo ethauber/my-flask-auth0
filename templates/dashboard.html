@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head><title>Dashboard</title></head>
+<body>
+  <h1>Dashboard</h1>
+  <p>Name: {{ user.name }}</p>
+  <p>Email: {{ user.email }}</p>
+
+  <button id="hello-btn">Call Hello API</button>
+  <pre id="hello-result"></pre>
+
+  <p><a href="{{ url_for('logout') }}">Logout</a></p>
+
+  <script>
+    const token = "{{ session.get('access_token') }}";
+
+    document.getElementById("hello-btn").addEventListener("click", () => {
+      fetch("/api/hello", {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      })
+      .then(r => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.json();
+      })
+      .then(data => {
+        document.getElementById("hello-result").innerText = JSON.stringify(data, null, 2);
+      })
+      .catch(err => {
+        document.getElementById("hello-result").innerText = `Error: ${err}`;
+      });
+    });
+  </script>
+</body>
+</html>

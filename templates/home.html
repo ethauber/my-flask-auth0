@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head><title>Home</title></head>
+<body>
+  {% if user %}
+    <p>Welcome, {{ user.name }} ({{ user.email }})!</p>
+    <p><a href="{{ url_for('dashboard') }}">Dashboard</a></p>
+    <p><a href="{{ url_for('logout') }}">Logout</a></p>
+  {% else %}
+    <p>Welcome, Guest!</p>
+    <p><a href="{{ url_for('login') }}">Login</a></p>
+  {% endif %}
+</body>
+</html>
